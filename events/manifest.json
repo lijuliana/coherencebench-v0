@@ -1,0 +1,77 @@
+{
+  "events_by_domain": {
+    "economics": 39,
+    "geopolitics": 57,
+    "politics": 25,
+    "science": 57,
+    "sports": 84
+  },
+  "files": {
+    "chains.jsonl": {
+      "lines": 19,
+      "sha256": "9b06c6be097d75885a4879aa9b9cdf54b58e11c379eae9ac76e5281a0e4e40c2"
+    },
+    "conjunctions.jsonl": {
+      "lines": 39,
+      "sha256": "39e42723a4943b128e7925001d3a1f8ae599a412c0f27fdfd7c18e34508c9583"
+    },
+    "entailments.jsonl": {
+      "lines": 21,
+      "sha256": "7d9243c2f237c51d1ca42f93de8a16e0cc4e86b36eb4e42f0466189d984d8936"
+    },
+    "events.jsonl": {
+      "lines": 262,
+      "sha256": "285842306e45d7ea93a9cd69a2207d6ae338cfcae896ca8812553dba5af0f65b"
+    },
+    "pairs.jsonl": {
+      "lines": 68,
+      "sha256": "b5cd4abf0d11b89a73a5a725df1b7de4206685a5746b3d9b8c0aeaf088f80946"
+    }
+  },
+  "license": "CC-BY-4.0",
+  "n_chain_events_total": 76,
+  "n_chains": 19,
+  "n_conjunctions": 39,
+  "n_entailments": 21,
+  "n_events": 262,
+  "n_pairs": 68,
+  "name": "CoherenceBench",
+  "schema": {
+    "chain": [
+      "chain_id",
+      "events_tightening",
+      "version"
+    ],
+    "conjunction": [
+      "triple_id",
+      "a_event",
+      "b_event",
+      "ab_event",
+      "version"
+    ],
+    "entailment": [
+      "entail_id",
+      "antecedent",
+      "consequent",
+      "version"
+    ],
+    "event": [
+      "event_id",
+      "question",
+      "question_open_date",
+      "resolution_date",
+      "outcome",
+      "domain",
+      "source_url",
+      "keywords",
+      "corpus_available"
+    ],
+    "pair": [
+      "pair_id",
+      "a_event",
+      "b_event",
+      "version"
+    ]
+  },
+  "version": "0.1.0"
+}

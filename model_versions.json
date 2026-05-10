@@ -1,0 +1,29 @@
+{
+  "comment": "API endpoint identifiers used in the CoherenceBench v0 evaluation. Captured on the access dates listed; the OpenAI and Anthropic chat APIs accept short aliases (e.g., 'gpt-5') that route to a versioned snapshot. Going forward, the runners save the exact snapshot returned in the response (system_fingerprint for OpenAI, model field in the response object for Anthropic) under raw_responses/.",
+  "access_date": "2026-05-12",
+  "openai": {
+    "gpt-4o":      {"alias_called": "gpt-4o",      "snapshot_at_access": "gpt-4o-2024-11-20"},
+    "gpt-4o-mini": {"alias_called": "gpt-4o-mini", "snapshot_at_access": "gpt-4o-mini-2024-07-18"},
+    "gpt-5":       {"alias_called": "gpt-5",       "snapshot_at_access": "captured per-call in raw_responses/"}
+  },
+  "anthropic": {
+    "claude-haiku-4-5":  {"alias_called": "claude-haiku-4-5",  "snapshot_at_access": "captured per-call in raw_responses/"},
+    "claude-sonnet-4-6": {"alias_called": "claude-sonnet-4-6", "snapshot_at_access": "captured per-call in raw_responses/"},
+    "claude-opus-4-6":   {"alias_called": "claude-opus-4-6",   "snapshot_at_access": "captured per-call in raw_responses/"}
+  },
+  "open_weight_models": {
+    "phi-3.5-mini":            {"hf_repo": "microsoft/Phi-3.5-mini-instruct",      "revision": "main", "loaded_via": "vLLM 0.6.6"},
+    "phi-4":                   {"hf_repo": "microsoft/phi-4",                       "revision": "main", "loaded_via": "vLLM 0.6.6 (bnb4bit)"},
+    "qwen2.5-7b":              {"hf_repo": "Qwen/Qwen2.5-7B-Instruct",              "revision": "main", "loaded_via": "vLLM 0.6.6"},
+    "qwen2.5-14b-awq":         {"hf_repo": "Qwen/Qwen2.5-14B-Instruct-AWQ",        "revision": "main", "loaded_via": "vLLM 0.6.6 (awq)"},
+    "qwen2.5-32b-awq":         {"hf_repo": "Qwen/Qwen2.5-32B-Instruct-AWQ",        "revision": "main", "loaded_via": "vLLM 0.6.6 (awq, FORCE_EAGER)"},
+    "mistral-7b-v0.3":         {"hf_repo": "mistralai/Mistral-7B-Instruct-v0.3",   "revision": "main", "loaded_via": "vLLM 0.6.6"},
+    "gemma-2-9b":              {"hf_repo": "google/gemma-2-9b-it",                  "revision": "main", "loaded_via": "vLLM 0.6.6"},
+    "r1-distill-qwen-7b":      {"hf_repo": "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",      "revision": "main", "loaded_via": "vLLM 0.6.6"},
+    "r1-distill-qwen-32b-awq": {"hf_repo": "casperhansen/deepseek-r1-distill-qwen-32b-awq","revision": "main", "loaded_via": "vLLM 0.6.6 (awq, FORCE_EAGER)"}
+  },
+  "raw_responses_directory": "benchmark/coherencebench_v0/raw_responses/",
+  "raw_responses_indexing":  "{model}/{event_id}/sample_{idx}.json",
+  "raw_responses_sha256_manifest": "benchmark/coherencebench_v0/raw_responses_manifest.sha256",
+  "anonymization_protocol": "Before public release, request IDs, organisation IDs, and any account-identifying fields in the response objects will be scrubbed. The forecast probabilities, model snapshot identifier, and timestamp will be retained."
+}
