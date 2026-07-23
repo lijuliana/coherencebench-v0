@@ -1,16 +1,21 @@
 # CoherenceBench v0
 
-**v0 demonstration release.** An outcome-free benchmark for measuring
-whether an LLM forecaster's probability outputs satisfy basic coherence
-constraints implied by probability theory.
+An outcome-free benchmark for whether an LLM forecaster's probabilities hold
+together. A model can top a resolved-outcome leaderboard and still quote a
+price system that contradicts itself: ask it for `P(A)` and for `P(not A)` and
+the two often fail to sum to one. CoherenceBench catches that the moment the
+forecasts are collected, with no resolved event required.
 
-This is a v0 methodology-demonstration release accompanying an anonymous
-ICML 2026 AI Forecasting Workshop submission. The event list, structure
-relations, and audit definitions may change in v0.2; the `audit.py`
-interface is intended to remain stable.
+**Presented at [Forecasting as a New Frontier of Intelligence](https://forecasting-workshop.github.io/),
+the AI Forecasting workshop at ICML 2026.**
+Paper: [`paper.pdf`](paper.pdf) &nbsp;·&nbsp; Poster: [Google Drive](https://drive.google.com/file/d/1jeU2_CRKJUzBW8oV_R84mLxmQ1WVcmVL/view?usp=sharing)
 
-CoherenceBench scores a model on **four axes** that do not require any
-event to resolve:
+Read each forecast as the price of a \$1 contract and a coherence violation
+becomes a static arbitrage: a bet book that pays regardless of how the event
+resolves. CoherenceBench scores a model on **four axes** of such violations,
+none of which consults ground truth.
+
+<p align="center"><img src="figures/four_axis_violation_rates.png" width="640" alt="Per-model violation rates on the four axes, sorted by accuracy"></p>
 
 | Axis             | Constraint                                       | Violation                                       |
 |------------------|--------------------------------------------------|-------------------------------------------------|
@@ -23,20 +28,23 @@ Each violation depends only on the model's own probability outputs; no
 ground-truth resolution enters the audit. `τ` defaults to `0.05` and is
 exposed via `--tau`.
 
-## Citation (anonymous, under review)
+## What the sweep found
 
-```
-@inproceedings{coherencebench2026,
-  title  = {Outcome-Free Audits and Repairs for LLM Forecasters},
-  author = {Anonymous},
-  booktitle = {ICML 2026 AI Forecasting Workshop},
-  year   = {2026},
-  note   = {Under review; submission #TBD}
-}
-```
+Fifteen forecasters (nine open-weight, six closed) on 262 events:
 
-Author identifiers, affiliations, and a permanent citation will be added
-to v0.2 after the review period.
+* **68.8%** of complementary pairs are incoherent, and the mean pair carries
+  about **\$0.14** of implied arbitrage per \$1 of notional.
+* **No model is clean on all four axes.** The failures are additive rather than
+  ordinal: strong models keep thresholds and entailments in order but still
+  break the sum-to-one and Fréchet constraints.
+* **Accuracy does not predict coherence.** The second- and third-most-accurate
+  models still violate complement parity on 48% and 72% of pairs, while the most
+  coherent model in the sweep ranks 9th of 15 on Brier.
+* **The gaps are repairable for free.** Projecting each complementary pair onto
+  the coherent set removes **20.4%** of pairwise Brier loss, with no outcomes
+  and no extra model calls.
+
+![Mean implied arbitrage per \$1 of notional, by model](figures/implied_arbitrage_by_model.png)
 
 ## Contents
 
@@ -50,12 +58,13 @@ events/
   manifest.json           version, counts, sha256 checksums for events/
 forecasts/
   all_models.csv          combined per-(model, event) forecast vector
-                          for all 15 models in the v0 sweep
+                          for all 15 models in the sweep
   <model>.csv             per-model slices, one file per model
 scripts/
   audit.py                stand-alone four-axis audit
 examples/
   random_baseline.py      audit a random-baseline forecaster
+paper.pdf                 the workshop paper
 build_release.py          regenerates events/ from upstream source files
 model_versions.json       closed-model alias-to-snapshot mapping at sweep time
 sha256_manifest.txt       sha256 of every file in this release
@@ -144,13 +153,13 @@ python scripts/audit.py --forecasts forecasts/all_models.csv --out report.json
 Expected output:
 
 ```
-loaded 2858 forecasts across 15 models
+loaded 3900 forecasts across 15 models
 
 Aggregate violation rates:
-  pair_violation_rate          0.729
-  chain_violation_rate         0.116
-  conj_violation_rate          0.347
-  ent_violation_rate           0.145
+  pair_violation_rate          0.688
+  chain_violation_rate         0.109
+  conj_violation_rate          0.333
+  ent_violation_rate           0.124
 ```
 
 The JSON report contains both `aggregate` and `by_model` per-axis
@@ -167,19 +176,30 @@ To audit a new model:
 
 ## Reproducing the paper numbers
 
-The included `forecasts/all_models.csv` is a deduplicated single
-precompute of the 15-model sweep used in the paper. Running
+`forecasts/all_models.csv` is the exact 15-model forecast set behind the
+paper. Running
 
 ```
 python scripts/audit.py --forecasts forecasts/all_models.csv
 ```
 
-produces per-axis rates within rounding of the paper's Table 3 entries
-under default `τ = 0.05`; per-model coverage (`pair_n`, `chain_n`,
-`conj_n`, `ent_n`) matches the paper's coverage caveats (closed models
-see 53/68 pairs, etc.). Minor differences arise from (a) parser
-variants reported only in the appendix and (b) the paper's per-model
-`outcome` resolution path; the audit pipeline itself is identical.
+reproduces the paper's headline pair rate (68.8%) and chain rate (10.9%)
+exactly. The bundled audit reports conjunction and entailment a couple of
+points below the paper (33.3% and 12.4% vs 35.1% and 15.7%) because the
+released `audit.py` applies the Fréchet and entailment tolerance slightly
+more loosely than the paper's internal pipeline; the pair and chain
+definitions are identical.
+
+## Citation
+
+```
+@inproceedings{li2026coherencebench,
+  title     = {Outcome-Free Arbitrage Audits and Coherence Repairs for LLM Forecasters},
+  author    = {Li, Juliana},
+  booktitle = {Forecasting as a New Frontier of Intelligence Workshop at ICML},
+  year      = {2026}
+}
+```
 
 ## License
 
