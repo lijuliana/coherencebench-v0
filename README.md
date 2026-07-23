@@ -71,7 +71,6 @@ examples/
 paper.pdf                 the workshop paper
 build_release.py          regenerates events/ from upstream source files
 model_versions.json       closed-model alias-to-snapshot mapping at sweep time
-sha256_manifest.txt       sha256 of every file in this release
 LICENSE-data              CC-BY-4.0 (applies to events/, forecasts/, JSON files)
 LICENSE-code              MIT (applies to scripts/, examples/, build_release.py)
 README.md                 this file
