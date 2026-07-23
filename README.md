@@ -15,7 +15,9 @@ becomes a static arbitrage: a bet book that pays regardless of how the event
 resolves. CoherenceBench scores a model on **four axes** of such violations,
 none of which consults ground truth.
 
-<p align="center"><img src="figures/four_axis_violation_rates.png" width="640" alt="Per-model violation rates on the four axes, sorted by accuracy"></p>
+<p align="center">
+  <img src="figures/four_axis_violation_rates.png" alt="Per-model violation rates on the four axes, sorted by accuracy">
+</p>
 
 | Axis             | Constraint                                       | Violation                                       |
 |------------------|--------------------------------------------------|-------------------------------------------------|
@@ -44,7 +46,9 @@ Fifteen forecasters (nine open-weight, six closed) on 262 events:
   the coherent set removes **20.4%** of pairwise Brier loss, with no outcomes
   and no extra model calls.
 
-![Mean implied arbitrage per \$1 of notional, by model](figures/implied_arbitrage_by_model.png)
+<p align="center">
+  <img src="figures/implied_arbitrage_by_model.png" width="640" alt="Mean implied arbitrage per $1 of notional, by model">
+</p>
 
 ## Contents
 
